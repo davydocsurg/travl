@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:travl/components/hero.dart';
+import 'package:travl/components/landing.dart';
 import 'package:travl/components/title.dart';
-// Uncomment lines 3 and 6 to view the visual layout at runtime.
-// import 'package:flutter/rendering.dart' show debugPaintSizeEnabled;
 
 void main() {
   // debugPaintSizeEnabled = true;
-  runApp(const MyApp());
+  runApp(Landing());
 }
 
 class MyApp extends StatelessWidget {
