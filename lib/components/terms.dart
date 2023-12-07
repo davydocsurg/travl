@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io' show Platform;
 import 'package:travl/components/hero.dart';
+import 'package:travl/utils/c_button.dart';
 import 'package:travl/utils/g_text.dart';
 
 class Terms extends StatelessWidget {
@@ -30,7 +31,7 @@ class Terms extends StatelessWidget {
           body: ListView(
             children: [
               Padding(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.all(15),
                 child: Column(
                     children: [_buildHeroSection(), ..._buildTermsBody()]),
               ),
@@ -111,6 +112,24 @@ class Terms extends StatelessWidget {
                       fontWeight: FontWeight.normal,
                       color: Colors.black,
                     )),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15),
+                    child: CButton(
+                      text: 'I agree',
+                      onPressed: () {},
+                      width: 300,
+                      height: 50,
+                      color: Colors.white,
+                      bgColor: Colors.purple[500]!,
+                      borderRadius: 12,
+                    ),
+                  ),
+                ],
               )
             ],
           ),

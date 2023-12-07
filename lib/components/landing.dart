@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io' show Platform;
 
+import 'package:travl/utils/c_button.dart';
+
 class Landing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -84,17 +86,15 @@ class Landing extends StatelessWidget {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 50.0),
-              child: Platform.isIOS
-                  ? CupertinoButton.filled(
-                      child: Text('Login'),
-                      onPressed: () {},
-                    )
-                  : ElevatedButton(
-                      child: Text('Login'),
-                      onPressed: () {},
-                    ),
-            ),
+                padding: const EdgeInsets.only(bottom: 50.0),
+                child: CButton(
+                  bgColor: Colors.blue,
+                  color: Colors.white,
+                  height: 50,
+                  onPressed: () {},
+                  text: 'Login',
+                  width: 100,
+                )),
           ],
         ),
       ),
