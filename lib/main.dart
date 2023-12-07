@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:travl/components/hero.dart';
-import 'package:travl/components/landing.dart';
-import 'package:travl/components/terms.dart';
+import 'package:travl/screens/landing.dart';
+import 'package:travl/screens/register.dart';
+import 'package:travl/screens/terms.dart';
 import 'package:travl/components/title.dart';
 
 void main() {
   // debugPaintSizeEnabled = true;
-  runApp(Terms());
+  runApp(Register());
 }
 
 class MyApp extends StatelessWidget {
