@@ -14,12 +14,17 @@ class Terms extends StatelessWidget {
       return CupertinoApp(
         title: secTitle,
         home: CupertinoPageScaffold(
-          child: Column(
+          child: ListView(
             children: [
-              _buildHeroSection(),
-              Column(
-                children: _buildTermsBody(),
-              ),
+              Padding(
+                padding: EdgeInsets.all(15),
+                child: Column(
+                  children: [
+                    _buildHeroSection(),
+                    ..._buildTermsBody(),
+                  ],
+                ),
+              )
             ],
           ),
         ),
@@ -59,12 +64,15 @@ class Terms extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text('Before you join',
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.black,
-                  )),
+              Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: Text('Before you join',
+                    style: TextStyle(
+                      fontSize: 23,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
+                    )),
+              ),
               Text(
                   'Olio is all about connecting neighbours to share more, and waste less. Because strong local communities are critical for our planet, and our well-being.',
                   style: TextStyle(
@@ -122,10 +130,22 @@ class Terms extends StatelessWidget {
                     child: CButton(
                       text: 'I agree',
                       onPressed: () {},
-                      width: 300,
+                      width: double.infinity,
                       height: 50,
                       color: Colors.white,
                       bgColor: Colors.purple[500]!,
+                      borderRadius: 12,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15),
+                    child: CButton(
+                      text: 'Cancel Sign Up',
+                      onPressed: () {},
+                      width: double.infinity,
+                      height: 50,
+                      color: Colors.purple[500]!,
+                      bgColor: Colors.white,
                       borderRadius: 12,
                     ),
                   ),
