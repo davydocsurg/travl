@@ -21,9 +21,15 @@ class CNavBar extends StatelessWidget implements PreferredSizeWidget {
       );
     } else {
       return AppBar(
-        title: Text(title),
+        title: Text(
+          title,
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.white, // Set the background color to white
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back,
+              color:
+                  Colors.black), // Set the icon color to black for visibility
           onPressed: onBack,
         ),
       );

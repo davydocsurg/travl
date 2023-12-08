@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:travl/components/hero.dart';
 import 'package:travl/screens/landing.dart';
+import 'package:travl/screens/login.dart';
 import 'package:travl/screens/register.dart';
 import 'package:travl/screens/terms.dart';
 import 'package:travl/components/title.dart';
 
 void main() {
   // debugPaintSizeEnabled = true;
-  runApp(Register());
+  runApp(Login());
 }
 
 class MyApp extends StatelessWidget {
