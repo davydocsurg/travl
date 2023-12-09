@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:travl/components/hero.dart';
 import 'package:travl/screens/home.dart';
 import 'package:travl/screens/landing.dart';
@@ -8,7 +9,7 @@ import 'package:travl/screens/terms.dart';
 import 'package:travl/components/title.dart';
 
 void main() {
-  // debugPaintSizeEnabled = true;
+  // debugPaintSizeEnabled = false;
   runApp(Home());
 }
 
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
       descColor: Colors.grey[500],
       iconColor: Colors.red[400],
     );
+
     Color color = Theme.of(context).primaryColor;
 
     Widget buttonSection = Row(
