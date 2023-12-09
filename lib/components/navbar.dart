@@ -3,26 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 class CNavBar extends StatelessWidget implements PreferredSizeWidget {
-  final String title;
-  final VoidCallback onBack;
+  final String? title;
+  final VoidCallback? onBack;
+  final List<Widget>? actions;
 
-  CNavBar({required this.title, required this.onBack});
+  CNavBar({this.title, this.onBack, this.actions});
 
   @override
   Widget build(BuildContext context) {
     if (Theme.of(context).platform == TargetPlatform.iOS || kIsWeb) {
       return CupertinoNavigationBar(
-        middle: Text(title),
+        middle: Text(title ?? ''),
         leading: CupertinoButton(
           padding: EdgeInsets.zero,
           onPressed: onBack,
           child: Icon(CupertinoIcons.back),
         ),
+        trailing: actions != null ? Row(children: actions!) : null,
       );
     } else {
       return AppBar(
         title: Text(
-          title,
+          title ?? '',
           style: TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.white, // Set the background color to white
@@ -32,6 +34,7 @@ class CNavBar extends StatelessWidget implements PreferredSizeWidget {
                   Colors.black), // Set the icon color to black for visibility
           onPressed: onBack,
         ),
+        actions: actions,
       );
     }
   }

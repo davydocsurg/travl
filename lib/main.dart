@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travl/components/hero.dart';
+import 'package:travl/screens/home.dart';
 import 'package:travl/screens/landing.dart';
 import 'package:travl/screens/login.dart';
 import 'package:travl/screens/register.dart';
@@ -8,7 +9,7 @@ import 'package:travl/components/title.dart';
 
 void main() {
   // debugPaintSizeEnabled = true;
-  runApp(Login());
+  runApp(Home());
 }
 
 class MyApp extends StatelessWidget {
@@ -154,3 +155,103 @@ class MyApp extends StatelessWidget {
 //     ],
 //   ),
 // );
+
+// -------------------------------------------------- //
+// class HomeState extends State<Home> {
+//   @override
+//   Widget build(BuildContext context) {
+//     if (Platform.isIOS) {
+//       return CupertinoApp(
+//         title: widget.navTitle,
+//         home: CupertinoTabScaffold(
+//           tabBar: CupertinoTabBar(
+//             items: [
+//               BottomNavigationBarItem(
+//                   icon: Icon(CupertinoIcons.list_bullet), label: 'Food'),
+//               BottomNavigationBarItem(
+//                   icon: Icon(CupertinoIcons.list_bullet), label: 'Non-food'),
+//             ],
+//           ),
+//           tabBuilder: (context, index) {
+//             return CupertinoPageScaffold(
+//               navigationBar: CupertinoNavigationBar(
+//                 leading: Row(
+//                   children: [
+//                     Expanded(
+//                       child: Material(
+//                         type: MaterialType.transparency,
+//                         child: TabBar(
+//                           tabs: [
+//                             Tab(text: 'Food'), // The first tab
+//                             Tab(text: 'Non-food'), // The second tab
+//                           ],
+//                         ),
+//                       ),
+//                     ),
+//                     IconButton(
+//                       icon: Icon(CupertinoIcons.ant_circle),
+//                       onPressed: () {},
+//                     ),
+//                   ],
+//                 ),
+//                 middle: Text(widget.navTitle),
+//                 trailing: Row(
+//                   mainAxisSize: MainAxisSize.min,
+//                   children: [
+//                     CupertinoButton(
+//                       padding: EdgeInsets.zero,
+//                       child: Icon(CupertinoIcons.search),
+//                       onPressed: () {},
+//                     ),
+//                     CupertinoButton(
+//                       padding: EdgeInsets.zero,
+//                       child: Icon(CupertinoIcons.ellipsis),
+//                       onPressed: () {},
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//               child: Center(
+//                 child: Text(index == 0 ? 'Food' : 'Non-food'),
+//               ),
+//             );
+//           },
+//         ),
+//       );
+//     } else {
+//       return MaterialApp(
+//         title: widget.navTitle,
+//         home: DefaultTabController(
+//           length: 2,
+//           child: Scaffold(
+//             appBar: AppBar(
+//               title: Text(widget.navTitle),
+//               actions: [
+//                 IconButton(
+//                   icon: Icon(Icons.search),
+//                   onPressed: () {},
+//                 ),
+//                 IconButton(
+//                   icon: Icon(Icons.more_vert),
+//                   onPressed: () {},
+//                 ),
+//               ],
+//               bottom: TabBar(
+//                 tabs: [
+//                   Tab(text: 'Food'),
+//                   Tab(text: 'Non-food'),
+//                 ],
+//               ),
+//             ),
+//             body: TabBarView(
+//               children: [
+//                 Center(child: Text('Food')),
+//                 Center(child: Text('Non-food')),
+//               ],
+//             ),
+//           ),
+//         ),
+//       );
+//     }
+//   }
+// }
