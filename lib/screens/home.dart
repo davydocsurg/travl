@@ -178,6 +178,48 @@ class HomeState extends State<Home> {
                   ),
                 ],
               ),
+              widget4: Row(
+                children: [
+                  Icon(
+                    Icons.location_on,
+                    color: Colors.black54,
+                    size: 16,
+                  ),
+                  SizedBox(width: 5),
+                  Text(
+                    '5.1 mil',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ],
+              ),
+              widget5: Row(
+                children: [
+                  Icon(
+                    Icons.remove_red_eye_outlined,
+                    color: Colors.black54,
+                    size: 16,
+                  ),
+                  SizedBox(width: 5),
+                  Text(
+                    '13',
+                    style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black54),
+                  ),
+                ],
+              ),
+              widget6: Text(
+                'Just added',
+                style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.green),
+              ),
               button: CButton(
                   text: 'Pick up',
                   fontSize: 13,
