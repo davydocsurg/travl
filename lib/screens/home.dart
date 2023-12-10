@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:travl/components/avatar.dart';
 import 'package:travl/components/card.dart';
 import 'package:travl/components/hero.dart';
 import 'package:travl/components/navbar.dart';
@@ -144,8 +145,49 @@ class HomeState extends State<Home> {
                     "Help rescue unsold food and share it with the community."),
             SizedBox(height: 15),
             ImageCard(
-              imagePath: 'images/man-bird.jpeg',
-              text: 'Help rescue unsold food and share it with the community.',
+              imagePath: 'images/travl-bg.jpeg',
+              title: 'Donuts',
+              widget1: CAvatar(
+                imageUrl: 'images/man-bird.jpeg',
+                size: 35,
+                local: true,
+              ),
+              widget2: Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: Text(
+                    'David',
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.black54),
+                  ),
+                ),
+              ),
+              widget3: Row(
+                children: [
+                  Icon(Icons.star, color: Colors.yellow[700]),
+                  SizedBox(width: 5),
+                  Text(
+                    '5.0',
+                    style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black54),
+                  ),
+                ],
+              ),
+              button: CButton(
+                  text: 'Pick up',
+                  fontSize: 13,
+                  onPressed: () {
+                    print('pickup');
+                  },
+                  width: double.infinity,
+                  height: 35,
+                  color: Colors.black,
+                  bgColor: Colors.yellow[200]!),
             ),
           ],
         ),
@@ -157,26 +199,10 @@ class HomeState extends State<Home> {
     return [
       SizedBox(
         width: double.infinity,
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('This is an Ad',
-                    style:
-                        TextStyle(fontSize: 22, fontWeight: FontWeight.w700)),
-                Text(
-                    'Help rescue unsold non-food and share it with the community.',
-                    style: TextStyle(fontSize: 16)),
-              ],
-            ),
-          ),
-        ),
+        child: PlainCard(
+            title: "This is an Ad",
+            subtitle:
+                "Help rescue unsold items and share it with the community."),
       )
     ];
   }

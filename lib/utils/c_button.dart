@@ -12,24 +12,28 @@ class CButton extends StatelessWidget {
   final Color bgColor;
   final String? emoji;
   final double? borderRadius;
+  final double? fontSize;
 
-  CButton({
-    required this.text,
-    required this.onPressed,
-    required this.width,
-    required this.height,
-    required this.color,
-    required this.bgColor,
-    this.emoji,
-    this.borderRadius,
-  });
+  CButton(
+      {required this.text,
+      required this.onPressed,
+      required this.width,
+      required this.height,
+      required this.color,
+      required this.bgColor,
+      this.emoji,
+      this.borderRadius,
+      this.fontSize});
 
   @override
   Widget build(BuildContext context) {
     final content = emoji == null
-        ? Text(
-            text,
-            style: TextStyle(color: color),
+        ? Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              text,
+              style: TextStyle(color: color, fontSize: fontSize),
+            ),
           )
         : Row(
             mainAxisAlignment: MainAxisAlignment.center,
