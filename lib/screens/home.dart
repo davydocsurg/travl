@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:travl/api/food.dart';
 import 'package:travl/components/avatar.dart';
 import 'package:travl/components/card.dart';
 import 'package:travl/components/hero.dart';
@@ -17,6 +18,7 @@ class Home extends StatefulWidget {
 
 class HomeState extends State<Home> {
   int _selectedTab = 0;
+  List<MockApi> mockApi = MockApiService.fetchData();
 
   @override
   Widget build(BuildContext context) {
@@ -125,8 +127,8 @@ class HomeState extends State<Home> {
             ],
           )),
       child: Padding(
-        padding: const EdgeInsets.only(top: 100, left: 12, right: 12),
-        child: Column(
+        padding: const EdgeInsets.only(top: 10, left: 12, right: 12),
+        child: ListView(
           children: _selectedTab == 0 ? _buildiOSFood() : _buildiOSNonFood(),
         ),
       ),
@@ -144,93 +146,98 @@ class HomeState extends State<Home> {
                 subtitle:
                     "Help rescue unsold food and share it with the community."),
             SizedBox(height: 15),
-            ImageCard(
-              imagePath: 'images/travl-bg.jpeg',
-              title: 'Donuts',
-              widget1: CAvatar(
-                imageUrl: 'images/man-bird.jpeg',
-                size: 35,
-                local: true,
-              ),
-              widget2: Padding(
-                padding: const EdgeInsets.only(top: 12),
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0),
-                  child: Text(
-                    'David',
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w800,
-                        color: Colors.black54),
+            Column(
+              children: List.generate(
+                mockApi.length, // Generate 5 ImageCards
+                (index) => ImageCard(
+                  imagePath: mockApi[index].imagePath,
+                  title: mockApi[index].title,
+                  widget1: CAvatar(
+                    imageUrl: mockApi[index].imageUrl,
+                    size: 35,
+                    local: true,
                   ),
-                ),
-              ),
-              widget3: Row(
-                children: [
-                  Icon(Icons.star, color: Colors.yellow[700]),
-                  SizedBox(width: 5),
-                  Text(
-                    '5.0',
-                    style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black54),
-                  ),
-                ],
-              ),
-              widget4: Row(
-                children: [
-                  Icon(
-                    Icons.location_on,
-                    color: Colors.black54,
-                    size: 16,
-                  ),
-                  SizedBox(width: 5),
-                  Text(
-                    '5.1 mil',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black54,
+                  widget2: Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Text(
+                        mockApi[index].name,
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.black54),
+                      ),
                     ),
                   ),
-                ],
-              ),
-              widget5: Row(
-                children: [
-                  Icon(
-                    Icons.remove_red_eye_outlined,
-                    color: Colors.black54,
-                    size: 16,
+                  widget3: Row(
+                    children: [
+                      Icon(Icons.star, color: Colors.yellow[700]),
+                      SizedBox(width: 5),
+                      Text(
+                        mockApi[index].rating,
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black54),
+                      ),
+                    ],
                   ),
-                  SizedBox(width: 5),
-                  Text(
-                    '13',
+                  widget4: Row(
+                    children: [
+                      Icon(
+                        Icons.location_on,
+                        color: Colors.black54,
+                        size: 16,
+                      ),
+                      SizedBox(width: 5),
+                      Text(
+                        mockApi[index].distance,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black54,
+                        ),
+                      ),
+                    ],
+                  ),
+                  widget5: Row(
+                    children: [
+                      Icon(
+                        Icons.remove_red_eye_outlined,
+                        color: Colors.black54,
+                        size: 16,
+                      ),
+                      SizedBox(width: 5),
+                      Text(
+                        mockApi[index].views,
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black54),
+                      ),
+                    ],
+                  ),
+                  widget6: Text(
+                    mockApi[index].time,
                     style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
-                        color: Colors.black54),
+                        color: Colors.green),
                   ),
-                ],
+                  button: CButton(
+                      text: 'Pick up',
+                      fontSize: 13,
+                      onPressed: () {
+                        print('pickup');
+                      },
+                      width: double.infinity,
+                      height: 35,
+                      color: Colors.black,
+                      bgColor: Colors.yellow[200]!),
+                ),
               ),
-              widget6: Text(
-                'Just added',
-                style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.green),
-              ),
-              button: CButton(
-                  text: 'Pick up',
-                  fontSize: 13,
-                  onPressed: () {
-                    print('pickup');
-                  },
-                  width: double.infinity,
-                  height: 35,
-                  color: Colors.black,
-                  bgColor: Colors.yellow[200]!),
-            ),
+            )
           ],
         ),
       )
