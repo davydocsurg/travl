@@ -21,9 +21,11 @@ class HomeState extends State<Home> {
   int _selectedTab = 0;
   List<MockApi> mockApi = MockApiService.fetchData();
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedTab = index;
-    });
+    if (index >= 0 && index < 5) {
+      setState(() {
+        _selectedTab = index;
+      });
+    }
   }
 
   @override
@@ -36,36 +38,8 @@ class HomeState extends State<Home> {
     } else {
       return MaterialApp(
         title: widget.navTitle,
-        home: DefaultTabController(
-          length: 2,
-          child: Scaffold(
-            appBar: AppBar(
-              title: Text(widget.navTitle),
-              actions: [
-                IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: () {},
-                ),
-                IconButton(
-                  icon: Icon(Icons.more_vert),
-                  onPressed: () {},
-                ),
-              ],
-              bottom: TabBar(
-                tabs: [
-                  Tab(text: 'Food'),
-                  Tab(text: 'Non-food'),
-                ],
-              ),
-            ),
-            body: TabBarView(
-              children: [
-                Center(child: Text('Food')),
-                Center(child: Text('Non-food')),
-              ],
-            ),
-          ),
-        ),
+        debugShowCheckedModeBanner: false,
+        home: _buildAndroidNav(),
       );
     }
   }
@@ -166,14 +140,105 @@ class HomeState extends State<Home> {
               padding: const EdgeInsets.only(top: 10, left: 12, right: 12),
               child: ListView(
                 children:
-                    _selectedTab == 0 ? _buildiOSFood() : _buildiOSNonFood(),
+                    _selectedTab == 0 ? _buildFoodCnt() : _buildiOSNonFood(),
               ),
             ),
           );
         });
   }
 
-  List<Widget> _buildiOSFood() {
+  Widget _buildAndroidNav() {
+    return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Flexible(
+              child: TextButton(
+                child: Text('Food',
+                    style: TextStyle(
+                        color: _selectedTab == 0 ? Colors.black : Colors.grey,
+                        fontWeight: FontWeight.w700,
+                        decoration: _selectedTab == 0
+                            ? TextDecoration.underline
+                            : TextDecoration.none)),
+                onPressed: () {
+                  setState(() {
+                    _selectedTab = 0;
+                  });
+                },
+              ),
+            ),
+            Flexible(
+              child: TextButton(
+                child: Text('Non-food',
+                    style: TextStyle(
+                        color: _selectedTab == 1 ? Colors.black : Colors.grey,
+                        fontWeight: FontWeight.w700,
+                        decoration: _selectedTab == 1
+                            ? TextDecoration.underline
+                            : TextDecoration.none)),
+                onPressed: () {
+                  setState(() {
+                    _selectedTab = 1;
+                  });
+                },
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          Icon(Icons.search, color: Colors.black),
+          SizedBox(width: 10),
+          Icon(Icons.location_on, color: Colors.black),
+          SizedBox(width: 10),
+          Icon(Icons.menu, color: Colors.black),
+          SizedBox(width: 50),
+        ],
+        backgroundColor: Colors.white,
+        elevation: 0.0,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 10, left: 12, right: 12),
+        child: ListView(
+          children: _selectedTab == 0 ? _buildFoodCnt() : _buildiOSNonFood(),
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: <BottomNavigationBarItem>[
+          CustomBottomNavigationBarItem(
+            iconData: Icons.home,
+            label: 'Home',
+          ).buildItem(),
+          CustomBottomNavigationBarItem(
+            iconData: Icons.stacked_bar_chart,
+            label: 'Goals',
+          ).buildItem(),
+          CustomBottomNavigationBarItem(
+            iconData: Icons.add_circle_outline,
+            size: 60,
+            label: '',
+            padding: EdgeInsets.zero,
+          ).buildItem(),
+          CustomBottomNavigationBarItem(
+            iconData: Icons.forum,
+            label: 'Forum',
+          ).buildItem(),
+          CustomBottomNavigationBarItem(
+            iconData: Icons.message,
+            label: 'Messages',
+          ).buildItem(),
+        ],
+        currentIndex: _selectedTab,
+        onTap: _onItemTapped,
+        selectedItemColor: Colors.purple[800],
+        // fixedColor: Colors.grey,
+        unselectedItemColor: Colors.grey,
+      ),
+    );
+  }
+
+  List<Widget> _buildFoodCnt() {
     return [
       SizedBox(
         width: double.infinity,
@@ -265,7 +330,7 @@ class HomeState extends State<Home> {
                   ),
                   button: CButton(
                       text: 'Pick up',
-                      fontSize: 13,
+                      fontSize: Platform.isIOS ? 13 : 11,
                       onPressed: () {
                         print('pickup');
                       },
