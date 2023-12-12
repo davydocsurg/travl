@@ -4,13 +4,13 @@ export 'c_nav.dart';
 
 class CustomBottomNavigationBarItem extends StatelessWidget {
   final IconData iconData;
-  final String label;
+  final String? label;
   final EdgeInsets padding;
   final double? size;
 
   CustomBottomNavigationBarItem(
       {required this.iconData,
-      required this.label,
+      this.label,
       this.padding = const EdgeInsets.only(top: 8),
       this.size});
 

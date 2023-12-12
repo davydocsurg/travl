@@ -75,7 +75,7 @@ class HomeState extends State<Home> {
         tabBar: CupertinoTabBar(
           items: <BottomNavigationBarItem>[
             CustomBottomNavigationBarItem(
-              iconData: CupertinoIcons.home,
+              iconData: CupertinoIcons.house_alt,
               label: 'Home',
             ).buildItem(),
             CustomBottomNavigationBarItem(
@@ -84,7 +84,6 @@ class HomeState extends State<Home> {
             ).buildItem(),
             CustomBottomNavigationBarItem(
               iconData: CupertinoIcons.add_circled_solid,
-              label: 'Add',
               size: 60,
               padding: EdgeInsets.zero,
             ).buildItem(),
