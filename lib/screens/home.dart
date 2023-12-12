@@ -7,6 +7,7 @@ import 'package:travl/components/card.dart';
 import 'package:travl/components/hero.dart';
 import 'package:travl/components/navbar.dart';
 import 'package:travl/utils/c_button.dart';
+import 'package:travl/utils/c_nav.dart';
 
 class Home extends StatefulWidget {
   final String secTitle = 'Travl - Home';
@@ -19,6 +20,11 @@ class Home extends StatefulWidget {
 class HomeState extends State<Home> {
   int _selectedTab = 0;
   List<MockApi> mockApi = MockApiService.fetchData();
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedTab = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,74 +71,107 @@ class HomeState extends State<Home> {
   }
 
   Widget _buildiOSNav() {
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-          middle: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Flexible(
-                child: CupertinoButton(
-                  padding: EdgeInsets.zero,
-                  child: Text('Food',
-                      style: TextStyle(
-                          color: _selectedTab == 0
-                              ? CupertinoColors.black
-                              : CupertinoColors.systemGrey,
-                          fontWeight: FontWeight.w700,
-                          decoration: _selectedTab == 0
-                              ? TextDecoration.underline
-                              : TextDecoration.none)),
-                  onPressed: () {
-                    setState(() {
-                      _selectedTab = 0;
-                    });
-                  },
-                ),
-              ),
-              Flexible(
-                child: CupertinoButton(
-                  padding: EdgeInsets.zero,
-                  child: Text('Non-food',
-                      style: TextStyle(
-                          color: _selectedTab == 1
-                              ? CupertinoColors.black
-                              : CupertinoColors.systemGrey,
-                          fontWeight: FontWeight.w700,
-                          decoration: _selectedTab == 1
-                              ? TextDecoration.underline
-                              : TextDecoration.none)),
-                  onPressed: () {
-                    setState(() {
-                      _selectedTab = 1;
-                    });
-                  },
-                ),
-              ),
-            ],
-          ),
-          trailing: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(CupertinoIcons.search, color: Colors.black),
-                  SizedBox(width: 10),
-                  Icon(Icons.location_on, color: Colors.black),
-                  SizedBox(width: 10),
-                  Icon(CupertinoIcons.bars, color: Colors.black),
-                ],
-              ),
-            ],
-          )),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 10, left: 12, right: 12),
-        child: ListView(
-          children: _selectedTab == 0 ? _buildiOSFood() : _buildiOSNonFood(),
+    return CupertinoTabScaffold(
+        tabBar: CupertinoTabBar(
+          items: <BottomNavigationBarItem>[
+            CustomBottomNavigationBarItem(
+              iconData: CupertinoIcons.home,
+              label: 'Home',
+            ).buildItem(),
+            CustomBottomNavigationBarItem(
+              iconData: CupertinoIcons.graph_circle,
+              label: 'Goals',
+            ).buildItem(),
+            CustomBottomNavigationBarItem(
+              iconData: CupertinoIcons.add_circled_solid,
+              label: 'Add',
+              size: 60,
+              padding: EdgeInsets.zero,
+            ).buildItem(),
+            CustomBottomNavigationBarItem(
+              iconData: CupertinoIcons.chat_bubble_2,
+              label: 'Forum',
+            ).buildItem(),
+            CustomBottomNavigationBarItem(
+              iconData: CupertinoIcons.envelope,
+              label: 'Messages',
+            ).buildItem(),
+          ],
+          currentIndex: _selectedTab,
+          onTap: _onItemTapped,
+          activeColor: Colors.purple[800],
         ),
-      ),
-    );
+        tabBuilder: (BuildContext context, int index) {
+          return CupertinoPageScaffold(
+            navigationBar: CupertinoNavigationBar(
+                middle: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Flexible(
+                      child: CupertinoButton(
+                        padding: EdgeInsets.zero,
+                        child: Text('Food',
+                            style: TextStyle(
+                                color: _selectedTab == 0
+                                    ? CupertinoColors.black
+                                    : CupertinoColors.systemGrey,
+                                fontWeight: FontWeight.w700,
+                                decoration: _selectedTab == 0
+                                    ? TextDecoration.underline
+                                    : TextDecoration.none)),
+                        onPressed: () {
+                          setState(() {
+                            _selectedTab = 0;
+                          });
+                        },
+                      ),
+                    ),
+                    Flexible(
+                      child: CupertinoButton(
+                        padding: EdgeInsets.zero,
+                        child: Text('Non-food',
+                            style: TextStyle(
+                                color: _selectedTab == 1
+                                    ? CupertinoColors.black
+                                    : CupertinoColors.systemGrey,
+                                fontWeight: FontWeight.w700,
+                                decoration: _selectedTab == 1
+                                    ? TextDecoration.underline
+                                    : TextDecoration.none)),
+                        onPressed: () {
+                          setState(() {
+                            _selectedTab = 1;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                trailing: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(CupertinoIcons.search, color: Colors.black),
+                        SizedBox(width: 10),
+                        Icon(Icons.location_on, color: Colors.black),
+                        SizedBox(width: 10),
+                        Icon(CupertinoIcons.bars, color: Colors.black),
+                      ],
+                    ),
+                  ],
+                )),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 10, left: 12, right: 12),
+              child: ListView(
+                children:
+                    _selectedTab == 0 ? _buildiOSFood() : _buildiOSNonFood(),
+              ),
+            ),
+          );
+        });
   }
 
   List<Widget> _buildiOSFood() {
