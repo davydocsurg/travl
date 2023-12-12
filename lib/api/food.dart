@@ -4,7 +4,7 @@ class MockApiService {
   static List<MockApi> fetchData() {
     return [
       MockApi(
-        imagePath: 'images/travl-bg.jpeg',
+        imagePath: 'images/food/donut.jpeg',
         title: 'Donuts',
         imageUrl: 'images/man-bird.jpeg',
         name: 'David',
@@ -14,7 +14,7 @@ class MockApiService {
         time: 'Just added',
       ),
       MockApi(
-        imagePath: 'images/travl-bg.jpeg',
+        imagePath: 'images/food/rice.jpeg',
         title: 'Rice',
         imageUrl: 'images/man-bird.jpeg',
         name: 'Fred',
@@ -24,7 +24,7 @@ class MockApiService {
         time: '2hrs ago',
       ),
       MockApi(
-        imagePath: 'images/travl-bg.jpeg',
+        imagePath: 'images/food/bread.jpeg',
         title: 'Bread',
         imageUrl: 'images/man-bird.jpeg',
         name: 'John',
@@ -34,7 +34,7 @@ class MockApiService {
         time: '1 day ago',
       ),
       MockApi(
-        imagePath: 'images/travl-bg.jpeg',
+        imagePath: 'images/food/pizza.jpeg',
         title: 'Pizza',
         imageUrl: 'images/man-bird.jpeg',
         name: 'Mary',
@@ -44,7 +44,7 @@ class MockApiService {
         time: '2 days ago',
       ),
       MockApi(
-        imagePath: 'images/travl-bg.jpeg',
+        imagePath: 'images/food/burger.jpeg',
         title: 'Burger',
         imageUrl: 'images/man-bird.jpeg',
         name: 'Jane',
