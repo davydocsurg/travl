@@ -132,7 +132,7 @@ Widget buildiOSNav(
                   Flexible(
                     child: CupertinoButton(
                       padding: EdgeInsets.zero,
-                      onPressed: onTabSelected(0),
+                      onPressed: () => onTabSelected(0),
                       child: Text('Food',
                           style: TextStyle(
                               color: selectedTab == 0
@@ -147,7 +147,7 @@ Widget buildiOSNav(
                   Flexible(
                     child: CupertinoButton(
                       padding: EdgeInsets.zero,
-                      onPressed: onTabSelected(1),
+                      onPressed: () => onTabSelected(1),
                       child: Text('Non-food',
                           style: TextStyle(
                               color: selectedTab == 1
