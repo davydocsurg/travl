@@ -4,7 +4,7 @@ import 'package:travl/components/feed.dart';
 import 'package:travl/utils/c_nav.dart';
 
 Widget buildAndroidNav(
-    int selectedTab, Function(int) onTabSelected, Function onItemTapped) {
+    int selectedTab, Function(int) onTabSelected, Function(int) onItemTapped) {
   return Scaffold(
     appBar: AppBar(
       title: Row(
@@ -19,9 +19,7 @@ Widget buildAndroidNav(
                       decoration: selectedTab == 0
                           ? TextDecoration.underline
                           : TextDecoration.none)),
-              onPressed: () {
-                onTabSelected(0);
-              },
+              onPressed: () => onTabSelected(0),
             ),
           ),
           Flexible(
@@ -33,9 +31,7 @@ Widget buildAndroidNav(
                       decoration: selectedTab == 1
                           ? TextDecoration.underline
                           : TextDecoration.none)),
-              onPressed: () {
-                onTabSelected(1);
-              },
+              onPressed: () => onTabSelected(1),
             ),
           ),
         ],
@@ -83,7 +79,7 @@ Widget buildAndroidNav(
         ).buildItem(),
       ],
       currentIndex: selectedTab,
-      onTap: onItemTapped(),
+      onTap: onItemTapped,
       selectedItemColor: Colors.purple[800],
       // fixedColor: Colors.grey,
       unselectedItemColor: Colors.grey,
