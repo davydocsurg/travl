@@ -1,11 +1,11 @@
-export 'food.dart';
+export 'items.dart';
 
-class MockFoodApiService {
-  static List<MockFoodApi> fetchData() {
+class ItemService {
+  static List<Item> fetchData() {
     return [
-      MockFoodApi(
-        imagePath: 'images/food/donut.jpeg',
-        title: 'Donuts',
+      Item(
+        imagePath: 'images/items/vacuum.jpeg',
+        title: 'Vacuum Cleaner',
         imageUrl: 'images/man-bird.jpeg',
         name: 'David',
         rating: '5.0',
@@ -13,9 +13,9 @@ class MockFoodApiService {
         views: '13',
         time: 'Just added',
       ),
-      MockFoodApi(
-        imagePath: 'images/food/rice.jpeg',
-        title: 'Rice',
+      Item(
+        imagePath: 'images/items/sofa.jpeg',
+        title: 'Sofa',
         imageUrl: 'images/man-bird.jpeg',
         name: 'Fred',
         rating: '4.0',
@@ -23,9 +23,9 @@ class MockFoodApiService {
         views: '3',
         time: '2hrs ago',
       ),
-      MockFoodApi(
-        imagePath: 'images/food/bread.jpeg',
-        title: 'Bread',
+      Item(
+        imagePath: 'images/items/table.jpeg',
+        title: 'Table',
         imageUrl: 'images/man-bird.jpeg',
         name: 'John',
         rating: '4.2',
@@ -33,9 +33,9 @@ class MockFoodApiService {
         views: '1',
         time: '1 day ago',
       ),
-      MockFoodApi(
-        imagePath: 'images/food/pizza.jpeg',
-        title: 'Pizza',
+      Item(
+        imagePath: 'images/items/chair.jpeg',
+        title: 'Chair',
         imageUrl: 'images/man-bird.jpeg',
         name: 'Mary',
         rating: '3.9',
@@ -43,9 +43,9 @@ class MockFoodApiService {
         views: '2',
         time: '2 days ago',
       ),
-      MockFoodApi(
-        imagePath: 'images/food/burger.jpeg',
-        title: 'Burger',
+      Item(
+        imagePath: 'images/items/lamp.jpeg',
+        title: 'Lamp',
         imageUrl: 'images/man-bird.jpeg',
         name: 'Jane',
         rating: '4.1',
@@ -57,7 +57,7 @@ class MockFoodApiService {
   }
 }
 
-class MockFoodApi {
+class Item {
   String imagePath;
   String title;
   String imageUrl;
@@ -67,7 +67,7 @@ class MockFoodApi {
   String views;
   String time;
 
-  MockFoodApi({
+  Item({
     required this.imagePath,
     required this.title,
     required this.imageUrl,
