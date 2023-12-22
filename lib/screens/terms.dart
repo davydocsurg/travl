@@ -12,6 +12,7 @@ class Terms extends StatelessWidget {
   Widget build(BuildContext context) {
     if (Platform.isIOS) {
       return CupertinoApp(
+        debugShowCheckedModeBanner: false,
         title: secTitle,
         home: CupertinoPageScaffold(
           child: ListView(
@@ -31,6 +32,7 @@ class Terms extends StatelessWidget {
       );
     } else {
       return MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: secTitle,
         home: Scaffold(
           body: ListView(

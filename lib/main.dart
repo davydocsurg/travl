@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:travl/components/hero.dart';
 import 'package:travl/screens/home.dart';
+import 'package:travl/screens/item_details.dart';
 import 'package:travl/screens/landing.dart';
 import 'package:travl/screens/login.dart';
 import 'package:travl/screens/register.dart';
@@ -9,8 +10,7 @@ import 'package:travl/screens/terms.dart';
 import 'package:travl/components/title.dart';
 
 void main() {
-  // debugPaintSizeEnabled = false;
-  runApp(Home());
+  runApp(ItemDetails());
 }
 
 class MyApp extends StatelessWidget {
