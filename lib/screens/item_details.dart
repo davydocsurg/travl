@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:travl/components/avatar.dart';
 import 'package:travl/components/hero.dart';
 import 'package:travl/components/navbar.dart';
+import 'package:travl/utils/c_button.dart';
 
 class ItemDetails extends StatelessWidget {
   final String secTitle = 'Travl - Details';
@@ -25,7 +26,7 @@ class ItemDetails extends StatelessWidget {
               SafeArea(
                 child: Padding(
                   padding: const EdgeInsets.only(top: 45),
-                  child: Column(
+                  child: ListView(
                     children: [
                       _buildHeroSection(),
                       ..._buildItemBody(),
@@ -184,6 +185,111 @@ class ItemDetails extends StatelessWidget {
             )
           ],
         ),
+      ),
+      Container(
+        alignment: Alignment.topLeft,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 8, top: 15),
+          child: Text(
+            'Food',
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: Colors.black54),
+          ),
+        ),
+      ),
+      Container(
+        alignment: Alignment.topLeft,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 8, top: 15),
+          child: Text(
+            'Pick-up times',
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w800,
+                color: Colors.black54),
+          ),
+        ),
+      ),
+      Container(
+        alignment: Alignment.topLeft,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 8, top: 4),
+          child: Text(
+            '4.50',
+            style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: Colors.black54),
+          ),
+        ),
+      ),
+      SizedBox(
+        height: 22,
+      ),
+      Container(
+        alignment: Alignment.topLeft,
+        color: Colors.grey[100],
+        child: Padding(
+          padding:
+              const EdgeInsets.only(left: 8, top: 22, bottom: 22, right: 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Everything in this section is given away for free 💚.',
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black54),
+              ),
+              Text(
+                'Strictly no selling, no swaps, no donations.',
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black54),
+              ),
+            ],
+          ),
+        ),
+      ),
+      SizedBox(
+        height: 22,
+      ),
+      Container(
+        alignment: Alignment.topLeft,
+        color: Colors.grey[100],
+        child: Padding(
+          padding:
+              const EdgeInsets.only(left: 8, top: 22, bottom: 22, right: 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'MAP GOES HERE.',
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black54),
+              ),
+            ],
+          ),
+        ),
+      ),
+      SizedBox(
+        height: 22,
+      ),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: CButton(
+            text: 'View Messages',
+            onPressed: () {},
+            width: 200,
+            height: 50,
+            color: Colors.white,
+            bgColor: Colors.purple[500]!),
       )
     ];
   }
