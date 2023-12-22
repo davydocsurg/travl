@@ -57,7 +57,17 @@ class CAvatar extends StatelessWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           image: DecorationImage(
-            image: NetworkImage(imageUrl),
+            image: local
+                ? Image.asset(
+                    imageUrl,
+                    height: size,
+                    width: size,
+                  ).image
+                : Image.network(
+                    imageUrl,
+                    height: size,
+                    width: size,
+                  ).image,
             fit: BoxFit.cover,
           ),
         ),

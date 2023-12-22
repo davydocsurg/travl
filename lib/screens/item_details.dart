@@ -40,9 +40,27 @@ class ItemDetails extends StatelessWidget {
       );
     } else {
       return MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Travl App',
         home: Scaffold(
-          body: Stack(),
+          body: Stack(
+            children: [
+              CNavBar(
+                title: "Donuts",
+              ),
+              SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 45),
+                  child: ListView(
+                    children: [
+                      _buildHeroSection(),
+                      ..._buildItemBody(),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       );
     }
