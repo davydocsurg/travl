@@ -8,6 +8,8 @@ class CInput extends StatelessWidget {
   final TextEditingController controller;
   final TextInputType keyboardType;
   final bool obscureText;
+  final bool enableSuggestions;
+  final bool autocorrect;
 
   CInput({
     required this.hintText,
@@ -15,6 +17,8 @@ class CInput extends StatelessWidget {
     required this.controller,
     this.keyboardType = TextInputType.text,
     this.obscureText = false,
+    this.enableSuggestions = true,
+    this.autocorrect = true,
   });
 
   @override
@@ -29,6 +33,8 @@ class CInput extends StatelessWidget {
             keyboardType: keyboardType,
             obscureText: obscureText,
             placeholder: hintText,
+            enableSuggestions: enableSuggestions,
+            autocorrect: autocorrect,
             decoration: BoxDecoration(
               border: Border.all(
                 color: CupertinoColors.inactiveGray,

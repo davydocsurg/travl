@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "32441279740",
+    "project_id": "cinehub-mv",
+    "storage_bucket": "cinehub-mv.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:32441279740:android:57d95833dc6ccea1e72379",
+        "android_client_info": {
+          "package_name": "com.example.travl"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "32441279740-gjp0d20k94bee5psf8ornn0cd7tv61ei.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdUsfFsHh0_vErI-KGYBu4L2OCgn7ZMIs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "32441279740-gjp0d20k94bee5psf8ornn0cd7tv61ei.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:travl/components/input.dart';
 import 'package:travl/components/navbar.dart';
 import 'package:travl/utils/c_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Register extends StatefulWidget {
   final String secTitle = 'Travl - Register';
@@ -41,9 +42,28 @@ class RegisterState extends State<Register> {
   late final _email = TextEditingController();
   late final _password = TextEditingController();
 
-  void handleRegister() {
-    print(
-        '${_firstName.text} ${_lastName.text}, ${_email.text}, ${_password.text}');
+  void handleRegister() async {
+    final email = _email.text;
+    final password = _password.text;
+
+    try {
+      final credential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      print(credential);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
+    // print(
+    //     '${_firstName.text} ${_lastName.text}, ${_email.text}, ${_password.text}');
   }
 
   @override
@@ -58,6 +78,7 @@ class RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     if (Platform.isIOS) {
       return CupertinoApp(
+        debugShowCheckedModeBanner: false,
         title: widget.secTitle,
         home: CupertinoPageScaffold(
             child: ListView(
@@ -120,6 +141,8 @@ class RegisterState extends State<Register> {
                 controller: _password,
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: true,
+                enableSuggestions: false,
+                autocorrect: false,
               ),
             ),
             Padding(
