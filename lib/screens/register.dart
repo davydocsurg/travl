@@ -36,7 +36,25 @@ class Register extends StatefulWidget {
 class RegisterState extends State<Register> {
   bool switchValue = false;
 
+  late final _firstName = TextEditingController();
+  late final _lastName = TextEditingController();
+  late final _email = TextEditingController();
+  late final _password = TextEditingController();
+
+  void handleRegister() {
+    print(
+        '${_firstName.text} ${_lastName.text}, ${_email.text}, ${_password.text}');
+  }
+
   @override
+  void dispose() {
+    _firstName.dispose();
+    _lastName.dispose();
+    _email.dispose();
+    _password.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     if (Platform.isIOS) {
       return CupertinoApp(
@@ -73,7 +91,7 @@ class RegisterState extends State<Register> {
             CInput(
               labelText: 'First Name',
               hintText: 'Enter your first name',
-              controller: TextEditingController(),
+              controller: _firstName,
               keyboardType: TextInputType.text,
             ),
             Padding(
@@ -81,7 +99,7 @@ class RegisterState extends State<Register> {
               child: CInput(
                 labelText: 'Last Name',
                 hintText: 'Enter your last name',
-                controller: TextEditingController(),
+                controller: _lastName,
                 keyboardType: TextInputType.text,
               ),
             ),
@@ -90,7 +108,7 @@ class RegisterState extends State<Register> {
               child: CInput(
                 labelText: 'Email',
                 hintText: 'Enter your email',
-                controller: TextEditingController(),
+                controller: _email,
                 keyboardType: TextInputType.emailAddress,
               ),
             ),
@@ -99,7 +117,7 @@ class RegisterState extends State<Register> {
               child: CInput(
                 labelText: 'Password',
                 hintText: '8+ characters',
-                controller: TextEditingController(),
+                controller: _password,
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: true,
               ),
@@ -137,7 +155,7 @@ class RegisterState extends State<Register> {
                 padding: const EdgeInsets.only(top: 40),
                 child: CButton(
                     text: 'Register',
-                    onPressed: () {},
+                    onPressed: () => handleRegister(),
                     width: double.infinity,
                     height: 50,
                     color: Colors.white,

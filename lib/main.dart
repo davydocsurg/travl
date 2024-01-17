@@ -10,7 +10,7 @@ import 'package:travl/screens/terms.dart';
 import 'package:travl/components/title.dart';
 
 void main() {
-  runApp(ItemDetails());
+  runApp(Register());
 }
 
 class MyApp extends StatelessWidget {
