@@ -59,38 +59,8 @@ class RegisterState extends State<Register> {
 
     void showErrorSnackBar(String errorMsg) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: DefaultTextStyle(
-            style: TextStyle(
-              color: Colors.white, // Set the text color
-              fontSize: 16, // Set the text size
-            ),
-            child: Text(errorMsg),
-          ),
-          backgroundColor: Colors.red, // Set the background color
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30), // Set the shape
-          ),
-        ),
+        SnackBar(content: Text(errorMsg)),
       );
-    }
-
-    @override
-    void initState() {
-      super.initState();
-
-      // Initialize your TextEditingControllers here if not already done
-
-      // Add listener to _email TextEditingController
-      _email.addListener(() {
-        if (emailError.isNotEmpty && _email.text.isNotEmpty) {
-          setState(() {
-            emailError = '';
-          });
-        }
-      });
-
-      // Add similar listeners for other TextEditingControllers if needed
     }
 
     try {
@@ -107,8 +77,9 @@ class RegisterState extends State<Register> {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
         setState(() {
-          emailError = 'An account with this email already exists.';
+          emailError = 'The account already exists for that email.';
         });
         showErrorSnackBar(emailError);
       }
@@ -133,34 +104,20 @@ class RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     if (Platform.isIOS) {
       return CupertinoApp(
-        debugShowCheckedModeBanner: false,
-        title: widget.secTitle,
-        home: CupertinoPageScaffold(
-            child: ListView(
-          children: [
-            CNavBar(title: widget.navTitle, onBack: widget.onBack),
-            ..._buildRegBody()
-          ],
-        )),
-      );
+          debugShowCheckedModeBanner: false,
+          title: widget.secTitle,
+          home: CupertinoPageScaffold(child: Scaffold(body: _buildRegBody())));
     } else {
       return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: widget.secTitle,
-        home: Scaffold(
-          body: ListView(
-            children: [
-              CNavBar(title: widget.navTitle, onBack: widget.onBack),
-              ..._buildRegBody()
-            ],
-          ),
-        ),
-      );
+          debugShowCheckedModeBanner: false,
+          title: widget.secTitle,
+          home: Scaffold(body: _buildRegBody()));
     }
   }
 
-  List<Widget> _buildRegBody() {
-    return [
+  Widget _buildRegBody() {
+    return ListView(children: [
+      CNavBar(title: widget.navTitle, onBack: widget.onBack),
       Padding(
         padding: EdgeInsets.only(right: 20, left: 20, top: 40),
         child: Column(
@@ -189,7 +146,6 @@ class RegisterState extends State<Register> {
                 enableSuggestions: false,
                 autocorrect: false,
                 keyboardType: TextInputType.emailAddress,
-                errorMsg: emailError,
               ),
             ),
             Padding(
@@ -258,6 +214,6 @@ class RegisterState extends State<Register> {
           ],
         ),
       )
-    ];
+    ]);
   }
 }

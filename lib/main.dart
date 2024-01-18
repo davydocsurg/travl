@@ -10,7 +10,12 @@ import 'package:travl/screens/terms.dart';
 import 'package:travl/components/title.dart';
 
 void main() {
-  runApp(Register());
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: Register(),
+      )));
 }
 
 class MyApp extends StatelessWidget {

@@ -10,6 +10,7 @@ class CInput extends StatelessWidget {
   final bool obscureText;
   final bool enableSuggestions;
   final bool autocorrect;
+  final String errorMsg;
 
   CInput({
     required this.hintText,
@@ -19,6 +20,7 @@ class CInput extends StatelessWidget {
     this.obscureText = false,
     this.enableSuggestions = true,
     this.autocorrect = true,
+    this.errorMsg = '',
   });
 
   @override
@@ -54,6 +56,7 @@ class CInput extends StatelessWidget {
           hintText: hintText,
           labelText: labelText,
           border: OutlineInputBorder(),
+          errorText: errorMsg.isNotEmpty ? errorMsg : null,
         ),
       );
     }
