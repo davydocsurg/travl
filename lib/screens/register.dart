@@ -9,6 +9,7 @@ import 'package:travl/firebase_options.dart';
 import 'package:travl/utils/c_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:travl/widgets/register_form.dart';
 
 class Register extends StatefulWidget {
   final String secTitle = 'Travl - Register';
@@ -216,104 +217,6 @@ class RegisterState extends State<Register> {
   }
 
   List<Widget> _buildRegBody() {
-    return [
-      Padding(
-        padding: EdgeInsets.only(right: 20, left: 20, top: 40),
-        child: Column(
-          children: [
-            CInput(
-              labelText: 'First Name',
-              hintText: 'Enter your first name',
-              controller: _firstName,
-              keyboardType: TextInputType.text,
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: widget.inputSpacingTop),
-              child: CInput(
-                labelText: 'Last Name',
-                hintText: 'Enter your last name',
-                controller: _lastName,
-                keyboardType: TextInputType.text,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: widget.inputSpacingTop),
-              child: CInput(
-                labelText: 'Email',
-                hintText: 'Enter your email',
-                controller: _email,
-                enableSuggestions: false,
-                autocorrect: false,
-                keyboardType: TextInputType.emailAddress,
-                errorMsg: emailError,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: widget.inputSpacingTop),
-              child: CInput(
-                labelText: 'Password',
-                hintText: '8+ characters',
-                controller: _password,
-                keyboardType: TextInputType.visiblePassword,
-                obscureText: true,
-                enableSuggestions: false,
-                autocorrect: false,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  if (Platform.isIOS)
-                    CupertinoSwitch(
-                      value: switchValue,
-                      onChanged: (value) {
-                        setState(() {
-                          switchValue = value;
-                          print(switchValue);
-                        });
-                      },
-                    )
-                  else
-                    Checkbox(
-                      value: switchValue,
-                      onChanged: (value) {
-                        setState(() {
-                          switchValue = value!;
-                        });
-                      },
-                    ),
-                  Text('I agree to the terms and conditions')
-                ],
-              ),
-            ),
-            Padding(
-                padding: const EdgeInsets.only(top: 40),
-                child: loading
-                    ? CircularProgressIndicator()
-                    : CButton(
-                        text: 'Register',
-                        onPressed: () => handleRegister(),
-                        width: double.infinity,
-                        height: 50,
-                        color: Colors.white,
-                        bgColor: Colors.blue[800]!)),
-            Padding(
-                padding: EdgeInsets.only(top: 30),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text('Already have an account? ',
-                        style: TextStyle(color: Colors.black)),
-                    Text('Login here',
-                        style: TextStyle(color: Colors.blue[900]!))
-                  ],
-                ))
-          ],
-        ),
-      )
-    ];
+    return [RegisterForm()];
   }
 }
