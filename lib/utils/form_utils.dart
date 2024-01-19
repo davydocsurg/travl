@@ -6,4 +6,13 @@ class FormUtils {
       controller.clear();
     }
   }
+
+  static void addFieldListener(
+      TextEditingController controller, ValueNotifier<String> errorNotifier) {
+    controller.addListener(() {
+      if (errorNotifier.value.isNotEmpty && controller.text.isNotEmpty) {
+        errorNotifier.value = '';
+      }
+    });
+  }
 }

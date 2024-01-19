@@ -26,7 +26,14 @@ class RegisterFormState extends State<RegisterForm> {
   final TextEditingController _password = TextEditingController();
   bool switchValue = false;
   bool _loading = false;
-  String _emailError = '';
+  ValueNotifier<String> _emailError = ValueNotifier<String>('');
+  void emailListener() {
+    if (_emailError.value.isNotEmpty && _email.text.isNotEmpty) {
+      setState(() {
+        _emailError.value = '';
+      });
+    }
+  }
 
   void _handleRegister() async {
     final userModel = UserModel(
@@ -46,9 +53,9 @@ class RegisterFormState extends State<RegisterForm> {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
-        setState(
-            () => _emailError = 'An account with this email already exists.');
-        showErrorSnackBar(context, _emailError);
+        setState(() =>
+            _emailError.value = 'An account with this email already exists.');
+        showErrorSnackBar(context, _emailError.value);
       }
     } catch (e) {
       print(e);
@@ -60,6 +67,13 @@ class RegisterFormState extends State<RegisterForm> {
 //       final prefs = await SharedPreferences.getInstance();
 // await prefs.setString('credential', credential.toString());
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // _email.addListener(emailListener);
+    FormUtils.addFieldListener(_email, _emailError);
   }
 
   @override
@@ -101,7 +115,7 @@ class RegisterFormState extends State<RegisterForm> {
               enableSuggestions: false,
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
-              errorMsg: _emailError,
+              errorMsg: _emailError.value,
             ),
           ),
           Padding(
