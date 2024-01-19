@@ -11,17 +11,14 @@ import 'package:travl/utils/form_utils.dart';
 import 'package:travl/utils/snackbar.dart';
 import '../services/auth_service.dart';
 
-class RegisterForm extends StatefulWidget {
+class LoginForm extends StatefulWidget {
   final double inputSpacingTop = 35;
 
   @override
-  RegisterFormState createState() => RegisterFormState();
+  LoginFormState createState() => LoginFormState();
 }
 
-class RegisterFormState extends State<RegisterForm> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _firstName = TextEditingController();
-  final TextEditingController _lastName = TextEditingController();
+class LoginFormState extends State<LoginForm> {
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
   bool switchValue = false;
@@ -35,37 +32,31 @@ class RegisterFormState extends State<RegisterForm> {
     }
   }
 
-  void _handleRegister() async {
-    final userModel = UserModel(
-      firstName: _firstName.text,
-      lastName: _lastName.text,
-      email: _email.text,
-      password: _password.text,
-    );
+  void _handleLogin() async {
+    final email = _email.text;
+    final password = _password.text;
 
     setState(() => _loading = true);
 
     try {
-      await AuthService().registerUser(userModel);
+      await AuthService().loginUser(email, password);
 
       setState(() => _loading = false);
-      showSuccessSnackBar(context, REGISTER_SUCCESS);
-      FormUtils.clearFields([_firstName, _lastName, _email, _password]);
+      print(LOGIN_SUCCESS);
+      showSuccessSnackBar(context, LOGIN_SUCCESS);
+      FormUtils.clearFields([_email, _password]);
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+      if (e.code == 'user-not-found') {
+        setState(() => _emailError.value = USER_NOT_FOUND);
+        showErrorSnackBar(context, _emailError.value);
         setState(() => _loading = false);
-      } else if (e.code == 'email-already-in-use') {
-        setState(() =>
-            _emailError.value = 'An account with this email already exists.');
+      } else if (e.code == 'wrong-password') {
+        setState(() => _emailError.value = INCORRECT_CREDENTIALS);
         showErrorSnackBar(context, _emailError.value);
         setState(() => _loading = false);
       }
     } catch (e) {
-      Text(
-        'print(e);',
-        style: TextStyle(color: Colors.red),
-      );
+      print(e);
       setState(() => _loading = false);
     }
   }
@@ -73,14 +64,11 @@ class RegisterFormState extends State<RegisterForm> {
   @override
   void initState() {
     super.initState();
-    // _email.addListener(emailListener);
     FormUtils.addFieldListener(_email, _emailError);
   }
 
   @override
   void dispose() {
-    _firstName.dispose();
-    _lastName.dispose();
     _email.dispose();
     _password.dispose();
     super.dispose();
@@ -92,21 +80,6 @@ class RegisterFormState extends State<RegisterForm> {
       padding: EdgeInsets.only(right: 20, left: 20, top: 40),
       child: Column(
         children: [
-          CInput(
-            labelText: 'First Name',
-            hintText: 'Enter your first name',
-            controller: _firstName,
-            keyboardType: TextInputType.text,
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: widget.inputSpacingTop),
-            child: CInput(
-              labelText: 'Last Name',
-              hintText: 'Enter your last name',
-              controller: _lastName,
-              keyboardType: TextInputType.text,
-            ),
-          ),
           Padding(
             padding: EdgeInsets.only(top: widget.inputSpacingTop),
             child: CInput(
@@ -165,8 +138,8 @@ class RegisterFormState extends State<RegisterForm> {
               child: _loading
                   ? CircularProgressIndicator()
                   : CButton(
-                      text: 'Register',
-                      onPressed: () => _handleRegister(),
+                      text: 'Login',
+                      onPressed: () => _handleLogin(),
                       width: double.infinity,
                       height: 50,
                       color: Colors.white,
@@ -176,9 +149,10 @@ class RegisterFormState extends State<RegisterForm> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('Already have an account? ',
+                  Text('Don\'t have an account? ',
                       style: TextStyle(color: Colors.black)),
-                  Text('Login here', style: TextStyle(color: Colors.blue[900]!))
+                  Text('Register here',
+                      style: TextStyle(color: Colors.blue[900]!))
                 ],
               ))
         ],

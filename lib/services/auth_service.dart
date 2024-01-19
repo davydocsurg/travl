@@ -6,10 +6,10 @@ class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<UserCredential> registerUser(UserModel user, String password) async {
+  Future<UserCredential> registerUser(UserModel user) async {
     final credential = await _firebaseAuth.createUserWithEmailAndPassword(
       email: user.email,
-      password: password,
+      password: user.password,
     );
 
     await _firebaseAuth.currentUser!
@@ -20,6 +20,15 @@ class AuthService {
       'email': user.email,
       'createdAt': DateTime.now(),
     });
+
+    return credential;
+  }
+
+  Future<UserCredential> loginUser(email, password) async {
+    final credential = await _firebaseAuth.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
 
     return credential;
   }

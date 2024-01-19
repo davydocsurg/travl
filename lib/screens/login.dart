@@ -1,10 +1,13 @@
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:travl/components/input.dart';
 import 'package:travl/components/navbar.dart';
+import 'package:travl/firebase_options.dart';
 import 'package:travl/utils/c_button.dart';
+import 'package:travl/widgets/login_form.dart';
 
 class Login extends StatefulWidget {
   final String secTitle = 'Travl - Login';
@@ -29,121 +32,37 @@ class LoginState extends State<Login> {
             child: ListView(
           children: [
             CNavBar(title: widget.navTitle, onBack: widget.onBack),
-            ..._buildRegBody()
+            ..._buildLoginBody()
           ],
         )),
       );
     } else {
       return MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: widget.secTitle,
         home: Scaffold(
-          body: ListView(
-            children: [
-              CNavBar(title: widget.navTitle, onBack: widget.onBack),
-              ..._buildRegBody()
-            ],
-          ),
+          body: FutureBuilder(
+              future: Firebase.initializeApp(
+                options: DefaultFirebaseOptions.currentPlatform,
+              ),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator(); // Show a loading spinner while waiting
+                } else {
+                  return ListView(
+                    children: [
+                      CNavBar(title: widget.navTitle, onBack: widget.onBack),
+                      ..._buildLoginBody()
+                    ],
+                  );
+                }
+              }),
         ),
       );
     }
   }
 
-  List<Widget> _buildRegBody() {
-    return [
-      Padding(
-        padding: EdgeInsets.only(right: 20, left: 20, top: 40),
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(top: widget.inputSpacingTop),
-              child: CInput(
-                labelText: 'Email',
-                hintText: 'Enter your email',
-                controller: TextEditingController(),
-                keyboardType: TextInputType.emailAddress,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: widget.inputSpacingTop),
-              child: CInput(
-                labelText: 'Password',
-                hintText: '8+ characters',
-                controller: TextEditingController(),
-                keyboardType: TextInputType.visiblePassword,
-                obscureText: true,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  if (Platform.isIOS)
-                    Transform.scale(
-                        scale: 0.8, // Adjust this value as per your need
-                        child: CupertinoSwitch(
-                          value: switchValue,
-                          onChanged: (value) {
-                            setState(() {
-                              switchValue = value;
-                              print(switchValue);
-                            });
-                          },
-                        ))
-                  else
-                    Checkbox(
-                      value: switchValue,
-                      onChanged: (value) {
-                        setState(() {
-                          switchValue = value!;
-                        });
-                      },
-                    ),
-                  Text(
-                    'Keep me logged in',
-                    style: TextStyle(fontSize: 14),
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 15),
-              child: Align(
-                alignment: Alignment.bottomRight,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text('Forgot password?',
-                        style: TextStyle(color: Colors.blue[900]!))
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-                padding: const EdgeInsets.only(top: 40),
-                child: CButton(
-                    text: 'Login',
-                    onPressed: () {},
-                    width: double.infinity,
-                    height: 50,
-                    color: Colors.white,
-                    bgColor: Colors.blue[800]!)),
-            Padding(
-                padding: EdgeInsets.only(top: 30),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text('Don\'t have an account? ',
-                        style: TextStyle(color: Colors.black)),
-                    Text('Register here',
-                        style: TextStyle(color: Colors.blue[900]!))
-                  ],
-                ))
-          ],
-        ),
-      )
-    ];
+  List<Widget> _buildLoginBody() {
+    return [LoginForm()];
   }
 }
