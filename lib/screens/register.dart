@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:travl/components/input.dart';
@@ -48,61 +49,90 @@ class RegisterState extends State<Register> {
   late final _email = TextEditingController();
   late final _password = TextEditingController();
 
+  void showErrorSnackBar(String errorMsg) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: DefaultTextStyle(
+          style: TextStyle(
+            color: Colors.white, // Set the text color
+            fontSize: 16, // Set the text size
+          ),
+          child: Text(errorMsg),
+        ),
+        backgroundColor: Colors.red, // Set the background color
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30), // Set the shape
+        ),
+      ),
+    );
+  }
+
+  void showSuccessSnackBar(String successMsg) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: DefaultTextStyle(
+          style: TextStyle(
+            color: Colors.white, // Set the text color
+            fontSize: 16, // Set the text size
+          ),
+          child: Text(successMsg),
+        ),
+        backgroundColor: Colors.green, // Set the background color to green
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30), // Set the shape
+        ),
+      ),
+    );
+  }
+
+  void emailListener() {
+    if (emailError.isNotEmpty && _email.text.isNotEmpty) {
+      setState(() {
+        emailError = '';
+      });
+    }
+  }
+
+  void clearFields() {
+    _firstName.clear();
+    _lastName.clear();
+    _email.clear();
+    _password.clear();
+  }
+
   void handleRegister() async {
     final email = _email.text;
     final password = _password.text;
+    final firstName = _firstName.text;
+    final lastName = _lastName.text;
 
     setState(() {
       loading = true;
       emailError = '';
     });
 
-    void showErrorSnackBar(String errorMsg) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: DefaultTextStyle(
-            style: TextStyle(
-              color: Colors.white, // Set the text color
-              fontSize: 16, // Set the text size
-            ),
-            child: Text(errorMsg),
-          ),
-          backgroundColor: Colors.red, // Set the background color
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30), // Set the shape
-          ),
-        ),
-      );
-    }
-
-    @override
-    void initState() {
-      super.initState();
-
-      // Initialize your TextEditingControllers here if not already done
-
-      // Add listener to _email TextEditingController
-      _email.addListener(() {
-        if (emailError.isNotEmpty && _email.text.isNotEmpty) {
-          setState(() {
-            emailError = '';
-          });
-        }
-      });
-
-      // Add similar listeners for other TextEditingControllers if needed
-    }
-
     try {
-      await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-      );
       final credential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
       print('\x1B[32m$credential\x1B[0m');
+      await FirebaseAuth.instance.currentUser!.updateDisplayName(
+        '$firstName $lastName',
+      );
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(credential.user!.uid)
+          .set(
+        {
+          'firstName': firstName,
+          'lastName': lastName,
+          'email': email,
+          'createdAt': DateTime.now(),
+        },
+      );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -118,7 +148,21 @@ class RegisterState extends State<Register> {
       setState(() {
         loading = false;
       });
+      showSuccessSnackBar('User registered successfully ✔');
+      clearFields();
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Initialize your TextEditingControllers here if not already done
+
+    // Add listener to _email TextEditingController
+    _email.addListener(emailListener);
+
+    // Add similar listeners for other TextEditingControllers if needed
   }
 
   @override
@@ -127,9 +171,11 @@ class RegisterState extends State<Register> {
     _lastName.dispose();
     _email.dispose();
     _password.dispose();
+    _email.removeListener(emailListener);
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     if (Platform.isIOS) {
       return CupertinoApp(
@@ -148,12 +194,22 @@ class RegisterState extends State<Register> {
         debugShowCheckedModeBanner: false,
         title: widget.secTitle,
         home: Scaffold(
-          body: ListView(
-            children: [
-              CNavBar(title: widget.navTitle, onBack: widget.onBack),
-              ..._buildRegBody()
-            ],
-          ),
+          body: FutureBuilder(
+              future: Firebase.initializeApp(
+                options: DefaultFirebaseOptions.currentPlatform,
+              ),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator(); // Show a loading spinner while waiting
+                } else {
+                  return ListView(
+                    children: [
+                      CNavBar(title: widget.navTitle, onBack: widget.onBack),
+                      ..._buildRegBody()
+                    ],
+                  );
+                }
+              }),
         ),
       );
     }
