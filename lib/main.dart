@@ -11,6 +11,7 @@ import 'package:travl/screens/login.dart';
 import 'package:travl/screens/register.dart';
 import 'package:travl/screens/terms.dart';
 import 'package:travl/components/title.dart';
+import 'package:travl/screens/verify_email.dart';
 
 void main() {
   runApp(MaterialApp(debugShowCheckedModeBanner: false, home: ILanding()
@@ -35,6 +36,7 @@ class ILanding extends StatelessWidget {
             options: DefaultFirebaseOptions.currentPlatform,
           ),
           builder: (context, appSnapshot) {
+            final user = FirebaseAuth.instance.currentUser;
             if (appSnapshot.connectionState == ConnectionState.waiting) {
               return Landing(); // Show a loading spinner while waiting
             } else {
@@ -43,10 +45,14 @@ class ILanding extends StatelessWidget {
                 builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Landing(); // Show a loading spinner while waiting
-                  } else if (snapshot.hasData) {
+                  } else if (snapshot.hasData &&
+                      user != null &&
+                      user.emailVerified != false) {
                     return Home();
+                  } else if (user != null && user.emailVerified == false) {
+                    return EmailVerification();
                   } else {
-                    return Login(); // Return a sign in page if no user is signed in
+                    return Register();
                   }
                 },
               );

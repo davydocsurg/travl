@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:travl/components/feed.dart';
@@ -41,7 +42,37 @@ Widget buildAndroidNav(
         SizedBox(width: 10),
         Icon(Icons.location_on, color: Colors.black),
         SizedBox(width: 10),
-        Icon(Icons.menu, color: Colors.black),
+        PopupMenuButton<String>(
+          icon: Icon(Icons.menu, color: Colors.black),
+          onSelected: (value) {
+            switch (value) {
+              case 'Profile':
+                print('Profile');
+              // Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
+              case 'Settings':
+                print('Settings');
+              // Navigator.push(context,
+              //     MaterialPageRoute(builder: (context) => SettingsPage()));
+              case 'Logout':
+                // Log out the user
+                FirebaseAuth.instance.signOut();
+            }
+          },
+          itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+            const PopupMenuItem<String>(
+              value: 'Profile',
+              child: Text('Profile'),
+            ),
+            const PopupMenuItem<String>(
+              value: 'Settings',
+              child: Text('Settings'),
+            ),
+            const PopupMenuItem<String>(
+              value: 'Logout',
+              child: Text('Logout'),
+            ),
+          ],
+        ),
         SizedBox(width: 50),
       ],
       backgroundColor: Colors.white,

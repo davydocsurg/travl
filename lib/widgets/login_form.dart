@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:travl/components/input.dart';
 import 'package:travl/constants/index.dart';
 import 'package:travl/models/user.dart';
+import 'package:travl/screens/register.dart';
 import 'package:travl/utils/c_button.dart';
 import 'package:travl/utils/form_utils.dart';
 import 'package:travl/utils/snackbar.dart';
@@ -151,8 +152,17 @@ class LoginFormState extends State<LoginForm> {
                 children: [
                   Text('Don\'t have an account? ',
                       style: TextStyle(color: Colors.black)),
-                  Text('Register here',
-                      style: TextStyle(color: Colors.blue[900]!))
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => Register()),
+                      );
+                    },
+                    child: Text(
+                      'Register here',
+                      style: TextStyle(color: Colors.blue[900]!),
+                    ),
+                  )
                 ],
               ))
         ],

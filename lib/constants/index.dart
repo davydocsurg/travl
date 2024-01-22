@@ -4,3 +4,5 @@ String LOGIN_SUCCESS = "User logged in successfully!";
 String LOGIN_ERROR = "An error occurred while logging in the user.";
 String INCORRECT_CREDENTIALS = 'Incorrect credentials! Check and try again.';
 String USER_NOT_FOUND = 'This account does not exist.';
+String SEND_VERIFICATION_EMAIL_SUCCESS =
+    'Verification email sent successfully!';

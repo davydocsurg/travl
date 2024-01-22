@@ -32,4 +32,8 @@ class AuthService {
 
     return credential;
   }
+
+  Future<void> logoutUser() async {
+    await _firebaseAuth.signOut();
+  }
 }
