@@ -37,28 +37,28 @@ class LoginState extends State<Login> {
         )),
       );
     } else {
-      return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: widget.secTitle,
-        home: Scaffold(
-          body: FutureBuilder(
-              future: Firebase.initializeApp(
-                options: DefaultFirebaseOptions.currentPlatform,
-              ),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator(); // Show a loading spinner while waiting
-                } else {
-                  return ListView(
-                    children: [
-                      CNavBar(title: widget.navTitle, onBack: widget.onBack),
-                      ..._buildLoginBody()
-                    ],
-                  );
-                }
-              }),
-        ),
+      // return MaterialApp(
+      //   debugShowCheckedModeBanner: false,
+      //   title: widget.secTitle,
+      //   home: Scaffold(
+      //     body: FutureBuilder(
+      //         future: Firebase.initializeApp(
+      //           options: DefaultFirebaseOptions.currentPlatform,
+      //         ),
+      //         builder: (context, snapshot) {
+      //           if (snapshot.connectionState == ConnectionState.waiting) {
+      //             return CircularProgressIndicator(); // Show a loading spinner while waiting
+      //           } else {
+      return ListView(
+        children: [
+          CNavBar(title: widget.navTitle, onBack: widget.onBack),
+          ..._buildLoginBody()
+        ],
       );
+      //           }
+      //         }),
+      //   ),
+      // );
     }
   }
 
